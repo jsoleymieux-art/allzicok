@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Allzic - Classements ACPM Mars 2026</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:14px;background:#f5f5f3;color:#1a1a1a;padding:32px 16px;min-height:100vh}
+.container{max-width:1060px;margin:0 auto}
+header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:12px}
+.header-text h1{font-size:22px;font-weight:700;margin-bottom:4px}
+.header-text p{font-size:13px;color:#666}
+.badge{background:#1a1a1a;color:#fff;font-size:11px;font-weight:600;padding:4px 10px;border-radius:6px;letter-spacing:.04em}
+.periods{display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap}
+.period{background:#fff;border:1px solid #e0e0dd;border-radius:10px;padding:12px 16px;flex:1;min-width:110px}
+.period.hi{border:2px solid #6366f1}
+.plabel{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:#aaa;margin-bottom:4px}
+.period.hi .plabel{color:#6366f1}
+.ptitle{font-size:15px;font-weight:600}
+.psub{font-size:11px;color:#999;margin-top:2px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:28px}
+.kpi{background:#fff;border:1px solid #e0e0dd;border-radius:10px;padding:14px 16px}
+.kpi-label{font-size:11px;color:#999;margin-bottom:6px;font-weight:500}
+.kpi-val{font-size:20px;font-weight:700}
+.kpi-evol{margin-top:4px;font-size:12px}
+.tabs{display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap}
+.tab{border:1px solid #d0d0cc;background:#fff;color:#555;font-size:13px;padding:6px 16px;border-radius:8px;cursor:pointer;font-family:inherit}
+.tab:hover{background:#f0f0ee}
+.tab.active{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
+.table-wrap{overflow-x:auto;border-radius:12px;border:1px solid #e0e0dd;background:#fff;margin-bottom:12px}
+table{width:100%;border-collapse:collapse;min-width:680px}
+th{font-size:11px;font-weight:600;color:#999;padding:10px 12px;border-bottom:1px solid #e8e8e5;text-align:right;white-space:nowrap;background:#fafaf8}
+th.left,td.left{text-align:left}
+td{padding:8px 12px;border-bottom:1px solid #f2f2ef;text-align:right;vertical-align:middle;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#fafaf8}
+td.name{font-weight:500;color:#1a1a1a;max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+td.muted{color:#bbb;font-size:12px}
+td.rang{color:#ccc;font-size:11px;font-weight:400}
+.hi-col{background:#eef2ff;border-left:2px solid #6366f1;border-right:2px solid #6366f1}
+.hi-bot{background:#eef2ff;border-left:2px solid #6366f1;border-right:2px solid #6366f1;border-bottom:2px solid #6366f1!important}
+.total-row td{background:#f5f5f3;font-weight:600;border-top:2px solid #ddd!important;border-bottom:none!important}
+.pill{display:inline-flex;align-items:center;gap:2px;padding:2px 8px;border-radius:99px;font-size:12px;font-weight:500;white-space:nowrap}
+.up{background:#dcfce7;color:#166534}
+.down{background:#fee2e2;color:#991b1b}
+.flat{background:#f3f4f6;color:#4b5563}
+.new{background:#e0e7ff;color:#3730a3}
+.search-bar{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.search-bar input{border:1px solid #d0d0cc;background:#fff;font-size:13px;padding:7px 12px;border-radius:8px;width:260px;font-family:inherit;outline:none}
+.search-bar input:focus{border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,.1)}
+.count{font-size:13px;color:#999}
+.note{margin-top:20px;font-size:11px;color:#bbb;line-height:1.7}
+@media(max-width:600px){body{padding:16px 8px}.periods{flex-direction:column}.search-bar input{width:100%}}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="header-text">
+      <h1>Allzic &#8212; Classements ACPM</h1>
+      <p>Comparaison Mars 2025 &middot; F&#233;vrier 2026 &middot; Mars 2026</p>
+    </div>
+    <span class="badge">ACPM certifi&#233;</span>
+  </header>
+
+  <div class="periods">
+    <div class="period"><div class="plabel">R&#233;f&#233;rence annuelle</div><div class="ptitle">Mars 2025</div><div class="psub">PV ACPM &middot; 69 web-radios</div></div>
+    <div class="period"><div class="plabel">R&#233;f&#233;rence mensuelle</div><div class="ptitle">F&#233;vrier 2026</div><div class="psub">PV ACPM &middot; 70 web-radios</div></div>
+    <div class="period hi"><div class="plabel">P&#233;riode analys&#233;e</div><div class="ptitle">Mars 2026</div><div class="psub">Export classements &middot; 70 web-radios</div></div>
+  </div>
+
+  <div class="kpis" id="kpis"></div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchView('fr',this)">&#201;coutes actives France</button>
+    <button class="tab" onclick="switchView('mo',this)">&#201;coutes actives Monde</button>
+    <button class="tab" onclick="switchView('dur',this)">Dur&#233;e moy. France</button>
+  </div>
+
+  <div class="search-bar">
+    <input type="text" id="search" placeholder="Rechercher une web-radio&#8230;" oninput="renderTable()">
+    <span class="count" id="count"></span>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="left" style="min-width:200px">Web-radio</th>
+          <th style="width:44px">Rang</th>
+          <th>Mars 2025</th>
+          <th>F&#233;v. 2026</th>
+          <th style="background:#eef2ff;border-left:2px solid #6366f1;border-right:2px solid #6366f1;border-top:2px solid #6366f1">Mars 2026</th>
+          <th>vs F&#233;v. 2026</th>
+          <th>vs Mars 2025</th>
+          <th>Dur&#233;e moy. FR</th>
+        </tr>
+      </thead>
+      <tbody id="table-body"></tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    Sources : PV Groupe Radio ACPM Mars 2025 (08/04/2025) &middot; PV Groupe Radio ACPM F&#233;vrier 2026 (10/03/2026) &middot; Export classements mensuels ACPM Mars 2026.<br>
+    EA = &#201;coutes Actives (sessions &ge; 30 secondes) &middot; -- = donn&#233;e non disponible &middot; Rang = classement g&#233;n&#233;ral toutes radios ACPM confondues.
+  </div>
+</div>
+<script>
+const DATA = {"radios": [{"name": "Allzic Radio Chill out", "rang": 102, "ea_fr_25": 215913, "ea_fr_feb": 173134, "ea_fr_mar": 181087, "ea_mo_25": 397734, "ea_mo_feb": 433702, "ea_mo_mar": 452340, "dur_fr_25": "18min 28s", "dur_fr_feb": "23min 46s", "dur_fr_mar": "26min 57s"}, {"name": "Allzic Radio Rock FM", "rang": 345, "ea_fr_25": 13235, "ea_fr_feb": 16794, "ea_fr_mar": 27493, "ea_mo_25": 22901, "ea_mo_feb": 21521, "ea_mo_mar": 33598, "dur_fr_25": "1h 18min", "dur_fr_feb": "1h 09min", "dur_fr_mar": "43min 04s"}, {"name": "Allzic Radio Années 80", "rang": 361, "ea_fr_25": 24413, "ea_fr_feb": 23149, "ea_fr_mar": 25425, "ea_mo_25": 34724, "ea_mo_feb": 31740, "ea_mo_mar": 34473, "dur_fr_25": "1h 01min", "dur_fr_feb": "56min 08s", "dur_fr_mar": "51min 15s"}, {"name": "Allzic Radio Funk", "rang": 403, "ea_fr_25": 22879, "ea_fr_feb": 19182, "ea_fr_mar": 20723, "ea_mo_25": 51895, "ea_mo_feb": 41998, "ea_mo_mar": 45267, "dur_fr_25": "44min 14s", "dur_fr_feb": "42min 53s", "dur_fr_mar": "42min 55s"}, {"name": "Allzic radio Disney", "rang": 456, "ea_fr_25": 19204, "ea_fr_feb": 15834, "ea_fr_mar": 17051, "ea_mo_25": 30229, "ea_mo_feb": 22176, "ea_mo_mar": 23897, "dur_fr_25": "42min 05s", "dur_fr_feb": "35min 41s", "dur_fr_mar": "35min 11s"}, {"name": "Allzic Radio Africa", "rang": 518, "ea_fr_25": 3045, "ea_fr_feb": 4384, "ea_fr_mar": 13502, "ea_mo_25": 11171, "ea_mo_feb": 45905, "ea_mo_mar": 27965, "dur_fr_25": "41min 49s", "dur_fr_feb": "17min 17s", "dur_fr_mar": "7min 44s"}, {"name": "Allzic Radio Dancefloor", "rang": 525, "ea_fr_25": 11412, "ea_fr_feb": 11334, "ea_fr_mar": 13235, "ea_mo_25": 22239, "ea_mo_feb": 20389, "ea_mo_mar": 21864, "dur_fr_25": "48min 48s", "dur_fr_feb": "51min 16s", "dur_fr_mar": "47min 44s"}, {"name": "Allzic Radio Orientale", "rang": 578, "ea_fr_25": 16514, "ea_fr_feb": null, "ea_fr_mar": 11307, "ea_mo_25": 39773, "ea_mo_feb": null, "ea_mo_mar": 30906, "dur_fr_25": "21min 40s", "dur_fr_feb": "--", "dur_fr_mar": "34min 30s"}, {"name": "Allzic Radio Country", "rang": 607, "ea_fr_25": 11571, "ea_fr_feb": 9310, "ea_fr_mar": 9951, "ea_mo_25": 18940, "ea_mo_feb": 14325, "ea_mo_mar": 14769, "dur_fr_25": "41min 07s", "dur_fr_feb": "40min 06s", "dur_fr_mar": "45min 14s"}, {"name": "Allzic Radio Blues", "rang": 623, "ea_fr_25": 10275, "ea_fr_feb": 18385, "ea_fr_mar": 9502, "ea_mo_25": 25075, "ea_mo_feb": 28603, "ea_mo_mar": 22561, "dur_fr_25": "1h 02min", "dur_fr_feb": "25min 56s", "dur_fr_mar": "54min 15s"}, {"name": "Allzic Radio Années 2000", "rang": 634, "ea_fr_25": 7919, "ea_fr_feb": 9416, "ea_fr_mar": 9193, "ea_mo_25": 13248, "ea_mo_feb": 13687, "ea_mo_mar": 12808, "dur_fr_25": "50min 10s", "dur_fr_feb": "38min 34s", "dur_fr_mar": "41min 44s"}, {"name": "Allzic Radio Rap FR", "rang": 650, "ea_fr_25": 11378, "ea_fr_feb": 8055, "ea_fr_mar": 8715, "ea_mo_25": 20512, "ea_mo_feb": 13084, "ea_mo_mar": 14724, "dur_fr_25": "23min 15s", "dur_fr_feb": "22min 55s", "dur_fr_mar": "20min 14s"}, {"name": "Allzic Radio Golds français", "rang": 664, "ea_fr_25": 10575, "ea_fr_feb": 7639, "ea_fr_mar": 8275, "ea_mo_25": 18833, "ea_mo_feb": 13494, "ea_mo_mar": 14036, "dur_fr_25": "55min 51s", "dur_fr_feb": "51min 39s", "dur_fr_mar": "54min 02s"}, {"name": "Allzic Radio Faire la fête", "rang": 681, "ea_fr_25": 10440, "ea_fr_feb": 8158, "ea_fr_mar": 7843, "ea_mo_25": 15494, "ea_mo_feb": 11076, "ea_mo_mar": 10847, "dur_fr_25": "50min 08s", "dur_fr_feb": "52min 02s", "dur_fr_mar": "53min 21s"}, {"name": "Allzic Radio Années 90", "rang": 701, "ea_fr_25": 10090, "ea_fr_feb": 9663, "ea_fr_mar": 7405, "ea_mo_25": 16140, "ea_mo_feb": 13189, "ea_mo_mar": 10583, "dur_fr_25": "48min 32s", "dur_fr_feb": "44min 15s", "dur_fr_mar": "46min 07s"}, {"name": "Allzic Radio Nationale 7", "rang": 704, "ea_fr_25": 6216, "ea_fr_feb": 7470, "ea_fr_mar": 7287, "ea_mo_25": 10559, "ea_mo_feb": 9960, "ea_mo_mar": 10687, "dur_fr_25": "2h 21min", "dur_fr_feb": "1h 56min", "dur_fr_mar": "1h 57min"}, {"name": "Allzic Radio Années 70", "rang": 710, "ea_fr_25": 7349, "ea_fr_feb": 6237, "ea_fr_mar": 7093, "ea_mo_25": 14176, "ea_mo_feb": 10046, "ea_mo_mar": 11476, "dur_fr_25": "44min 22s", "dur_fr_feb": "44min 45s", "dur_fr_mar": "45min 43s"}, {"name": "Allzic Radio Années 50", "rang": 717, "ea_fr_25": 5105, "ea_fr_feb": 10420, "ea_fr_mar": 6921, "ea_mo_25": 11853, "ea_mo_feb": 15274, "ea_mo_mar": 12041, "dur_fr_25": "44min 57s", "dur_fr_feb": "23min 50s", "dur_fr_mar": "39min 20s"}, {"name": "Allzic Radio Zen", "rang": 722, "ea_fr_25": 6499, "ea_fr_feb": 5536, "ea_fr_mar": 6741, "ea_mo_25": 17850, "ea_mo_feb": 11200, "ea_mo_mar": 13649, "dur_fr_25": "54min 20s", "dur_fr_feb": "48min 57s", "dur_fr_mar": "44min 08s"}, {"name": "Allzic Radio Italia", "rang": 742, "ea_fr_25": null, "ea_fr_feb": 4744, "ea_fr_mar": 6281, "ea_mo_25": null, "ea_mo_feb": 10297, "ea_mo_mar": 12647, "dur_fr_25": "--", "dur_fr_feb": "37min 27s", "dur_fr_mar": "37min 34s"}, {"name": "Allzic Radio Zouk", "rang": 748, "ea_fr_25": 6297, "ea_fr_feb": 6536, "ea_fr_mar": 6203, "ea_mo_25": 15354, "ea_mo_feb": 10928, "ea_mo_mar": 10829, "dur_fr_25": "38min 52s", "dur_fr_feb": "29min 39s", "dur_fr_mar": "34min 40s"}, {"name": "Allzic Radio Black Music", "rang": 751, "ea_fr_25": 5409, "ea_fr_feb": 5206, "ea_fr_mar": 6044, "ea_mo_25": 14101, "ea_mo_feb": 10240, "ea_mo_mar": 12131, "dur_fr_25": "1h 27min", "dur_fr_feb": "57min 14s", "dur_fr_mar": "52min 54s"}, {"name": "Allzic Radio Hard and Heavy", "rang": 753, "ea_fr_25": 5774, "ea_fr_feb": 6254, "ea_fr_mar": 6029, "ea_mo_25": 21589, "ea_mo_feb": 16428, "ea_mo_mar": 16560, "dur_fr_25": "37min 31s", "dur_fr_feb": "34min 02s", "dur_fr_mar": "35min 22s"}, {"name": "Allzic Radio Latino", "rang": 763, "ea_fr_25": 5986, "ea_fr_feb": 4361, "ea_fr_mar": 5653, "ea_mo_25": 17320, "ea_mo_feb": 11411, "ea_mo_mar": 13661, "dur_fr_25": "42min 25s", "dur_fr_feb": "51min 56s", "dur_fr_mar": "55min 35s"}, {"name": "Allzic Radio Nouveautés Françaises", "rang": 768, "ea_fr_25": 3788, "ea_fr_feb": 4420, "ea_fr_mar": 5585, "ea_mo_25": 9013, "ea_mo_feb": 7877, "ea_mo_mar": 9337, "dur_fr_25": "1h 31min", "dur_fr_feb": "1h 36min", "dur_fr_mar": "1h 42min"}, {"name": "Allzic Radio Classic", "rang": 769, "ea_fr_25": 6140, "ea_fr_feb": 5295, "ea_fr_mar": 5532, "ea_mo_25": 20752, "ea_mo_feb": 15494, "ea_mo_mar": 14660, "dur_fr_25": "37min 02s", "dur_fr_feb": "36min 18s", "dur_fr_mar": "35min 43s"}, {"name": "Allzic Radio Pop_Rock 80", "rang": 798, "ea_fr_25": 7627, "ea_fr_feb": 4474, "ea_fr_mar": 4925, "ea_mo_25": 8725, "ea_mo_feb": 6693, "ea_mo_mar": 6947, "dur_fr_25": "58min 21s", "dur_fr_feb": "47min 20s", "dur_fr_mar": "52min 28s"}, {"name": "Allzic Radio Reggae", "rang": 801, "ea_fr_25": 4097, "ea_fr_feb": 4157, "ea_fr_mar": 4864, "ea_mo_25": 26556, "ea_mo_feb": 14812, "ea_mo_mar": 16550, "dur_fr_25": "37min 51s", "dur_fr_feb": "31min 50s", "dur_fr_mar": "35min 36s"}, {"name": "Allzic Radio Comptines", "rang": 807, "ea_fr_25": 4633, "ea_fr_feb": 4981, "ea_fr_mar": 4731, "ea_mo_25": 9557, "ea_mo_feb": 6736, "ea_mo_mar": 6676, "dur_fr_25": "25min 55s", "dur_fr_feb": "24min 34s", "dur_fr_mar": "25min 04s"}, {"name": "Allzic Radio Enfants 0-4 ans", "rang": 808, "ea_fr_25": 5828, "ea_fr_feb": 5049, "ea_fr_mar": 4707, "ea_mo_25": 13521, "ea_mo_feb": 9063, "ea_mo_mar": 9051, "dur_fr_25": "33min 53s", "dur_fr_feb": "32min 17s", "dur_fr_mar": "36min 01s"}, {"name": "Allzic Radio Rap US", "rang": 815, "ea_fr_25": 4285, "ea_fr_feb": 3797, "ea_fr_mar": 4505, "ea_mo_25": 13764, "ea_mo_feb": 8378, "ea_mo_mar": 9758, "dur_fr_25": "24min 31s", "dur_fr_feb": "31min 10s", "dur_fr_mar": "29min 51s"}, {"name": "Allzic Radio Disco", "rang": 829, "ea_fr_25": 5698, "ea_fr_feb": 4230, "ea_fr_mar": 4146, "ea_mo_25": 14604, "ea_mo_feb": 9625, "ea_mo_mar": 10322, "dur_fr_25": "52min 46s", "dur_fr_feb": "48min 33s", "dur_fr_mar": "48min 25s"}, {"name": "Allzic Radio Enfants 7-12 ans", "rang": 832, "ea_fr_25": 4957, "ea_fr_feb": 4166, "ea_fr_mar": 4120, "ea_mo_25": 9252, "ea_mo_feb": 6201, "ea_mo_mar": 6213, "dur_fr_25": "30min 27s", "dur_fr_feb": "23min 48s", "dur_fr_mar": "30min 57s"}, {"name": "Allzic Radio Deep Disco", "rang": 841, "ea_fr_25": null, "ea_fr_feb": 3613, "ea_fr_mar": 3956, "ea_mo_25": null, "ea_mo_feb": 14471, "ea_mo_mar": 11629, "dur_fr_25": "--", "dur_fr_feb": "57min 12s", "dur_fr_mar": "1h 00min"}, {"name": "Allzic Radio Humour", "rang": 856, "ea_fr_25": 4290, "ea_fr_feb": 3086, "ea_fr_mar": 3668, "ea_mo_25": 9398, "ea_mo_feb": 5805, "ea_mo_mar": 6919, "dur_fr_25": "35min 52s", "dur_fr_feb": "29min 34s", "dur_fr_mar": "27min 35s"}, {"name": "Allzic Radio Enfoirés", "rang": 876, "ea_fr_25": 3768, "ea_fr_feb": 2717, "ea_fr_mar": 3212, "ea_mo_25": 7669, "ea_mo_feb": 4294, "ea_mo_mar": 5233, "dur_fr_25": "42min 35s", "dur_fr_feb": "43min 49s", "dur_fr_mar": "53min 46s"}, {"name": "Allzic Radio Love", "rang": 880, "ea_fr_25": 4028, "ea_fr_feb": 3403, "ea_fr_mar": 3158, "ea_mo_25": 14283, "ea_mo_feb": 10189, "ea_mo_mar": 10589, "dur_fr_25": "1h 07min", "dur_fr_feb": "1h 03min", "dur_fr_mar": "57min 50s"}, {"name": "Allzic Radio Classic piano", "rang": 884, "ea_fr_25": 2306, "ea_fr_feb": 2821, "ea_fr_mar": 3098, "ea_mo_25": 16679, "ea_mo_feb": 14443, "ea_mo_mar": 16053, "dur_fr_25": "1h 00min", "dur_fr_feb": "48min 49s", "dur_fr_mar": "52min 26s"}, {"name": "Allzic Radio Electro Chill", "rang": 891, "ea_fr_25": 4047, "ea_fr_feb": 2518, "ea_fr_mar": 3004, "ea_mo_25": 9792, "ea_mo_feb": 6279, "ea_mo_mar": 6607, "dur_fr_25": "1h 03min", "dur_fr_feb": "55min 27s", "dur_fr_mar": "49min 27s"}, {"name": "Allzic Radio Lounge", "rang": 897, "ea_fr_25": 8874, "ea_fr_feb": 2777, "ea_fr_mar": 2870, "ea_mo_25": 18420, "ea_mo_feb": 7606, "ea_mo_mar": 7441, "dur_fr_25": "38min 23s", "dur_fr_feb": "48min 52s", "dur_fr_mar": "48min 39s"}, {"name": "Allzic Radio Enfants 4-7 ans", "rang": 904, "ea_fr_25": 4957, "ea_fr_feb": 3354, "ea_fr_mar": 2798, "ea_mo_25": 9177, "ea_mo_feb": 4872, "ea_mo_mar": 4629, "dur_fr_25": "29min 44s", "dur_fr_feb": "28min 56s", "dur_fr_mar": "31min 57s"}, {"name": "Allzic Radio Jazz Lounge", "rang": 914, "ea_fr_25": 3943, "ea_fr_feb": 3208, "ea_fr_mar": 2667, "ea_mo_25": 18232, "ea_mo_feb": 10017, "ea_mo_mar": 11617, "dur_fr_25": "1h 01min", "dur_fr_feb": "1h 04min", "dur_fr_mar": "1h 11min"}, {"name": "Allzic Radio Top 50", "rang": 929, "ea_fr_25": 1988, "ea_fr_feb": 2239, "ea_fr_mar": 2472, "ea_mo_25": 6653, "ea_mo_feb": 4794, "ea_mo_mar": 5834, "dur_fr_25": "45min 25s", "dur_fr_feb": "47min 13s", "dur_fr_mar": "49min 00s"}, {"name": "Allzic Radio Live FR", "rang": 937, "ea_fr_25": 2892, "ea_fr_feb": 2325, "ea_fr_mar": 2343, "ea_mo_25": 6592, "ea_mo_feb": 3877, "ea_mo_mar": 4103, "dur_fr_25": "36min 30s", "dur_fr_feb": "41min 02s", "dur_fr_mar": "36min 08s"}, {"name": "Allzic Radio French Mix", "rang": 938, "ea_fr_25": 3452, "ea_fr_feb": 2070, "ea_fr_mar": 2321, "ea_mo_25": 6567, "ea_mo_feb": 2850, "ea_mo_mar": 3294, "dur_fr_25": "1h 00min", "dur_fr_feb": "1h 02min", "dur_fr_mar": "1h 00min"}, {"name": "Allzic Radio Jazz", "rang": 941, "ea_fr_25": 3066, "ea_fr_feb": 2290, "ea_fr_mar": 2310, "ea_mo_25": 8925, "ea_mo_feb": 6571, "ea_mo_mar": 6829, "dur_fr_25": "32min 36s", "dur_fr_feb": "39min 12s", "dur_fr_mar": "35min 12s"}, {"name": "Allzic Radio Fitness", "rang": 943, "ea_fr_25": 3011, "ea_fr_feb": 2343, "ea_fr_mar": 2299, "ea_mo_25": 10214, "ea_mo_feb": 7253, "ea_mo_mar": 7081, "dur_fr_25": "59min 31s", "dur_fr_feb": "1h 02min", "dur_fr_mar": "1h 06min"}, {"name": "Allzic radio Johnny", "rang": 957, "ea_fr_25": 1973, "ea_fr_feb": 1809, "ea_fr_mar": 2173, "ea_mo_25": 5663, "ea_mo_feb": 3449, "ea_mo_mar": 3540, "dur_fr_25": "23min 36s", "dur_fr_feb": "22min 07s", "dur_fr_mar": "23min 33s"}, {"name": "Allzic Radio Kitsch", "rang": 963, "ea_fr_25": 2471, "ea_fr_feb": 1687, "ea_fr_mar": 2086, "ea_mo_25": 5819, "ea_mo_feb": 2564, "ea_mo_mar": 3141, "dur_fr_25": "32min 56s", "dur_fr_feb": "38min 10s", "dur_fr_mar": "29min 19s"}, {"name": "Allzic Radio Road 66", "rang": 968, "ea_fr_25": 1537, "ea_fr_feb": 2519, "ea_fr_mar": 2020, "ea_mo_25": 6059, "ea_mo_feb": 4540, "ea_mo_mar": 4119, "dur_fr_25": "21min 05s", "dur_fr_feb": "23min 22s", "dur_fr_mar": "24min 21s"}, {"name": "Allzic Radio Brazil", "rang": 1000, "ea_fr_25": 2555, "ea_fr_feb": 1693, "ea_fr_mar": 1765, "ea_mo_25": 7322, "ea_mo_feb": 4851, "ea_mo_mar": 4716, "dur_fr_25": "32min 24s", "dur_fr_feb": "25min 57s", "dur_fr_mar": "30min 01s"}, {"name": "Allzic Radio Pop queens", "rang": 1005, "ea_fr_25": null, "ea_fr_feb": 1098, "ea_fr_mar": 1747, "ea_mo_25": null, "ea_mo_feb": 3824, "ea_mo_mar": 5677, "dur_fr_25": "--", "dur_fr_feb": "52min 08s", "dur_fr_mar": "46min 30s"}, {"name": "Allzic Radio Live Gold", "rang": 1008, "ea_fr_25": 1934, "ea_fr_feb": 1676, "ea_fr_mar": 1732, "ea_mo_25": 6287, "ea_mo_feb": 3995, "ea_mo_mar": 3777, "dur_fr_25": "41min 45s", "dur_fr_feb": "30min 52s", "dur_fr_mar": "35min 49s"}, {"name": "Allzic Radio Comédies Musicales", "rang": 1024, "ea_fr_25": 1479, "ea_fr_feb": 1302, "ea_fr_mar": 1595, "ea_mo_25": 2950, "ea_mo_feb": 2554, "ea_mo_mar": 2951, "dur_fr_25": "32min 32s", "dur_fr_feb": "32min 38s", "dur_fr_mar": "26min 40s"}, {"name": "Allzic Radio Rap Hits", "rang": 1030, "ea_fr_25": null, "ea_fr_feb": 1555, "ea_fr_mar": 1557, "ea_mo_25": null, "ea_mo_feb": 1703, "ea_mo_mar": 3063, "dur_fr_25": "--", "dur_fr_feb": "20min 55s", "dur_fr_mar": "23min 23s"}, {"name": "Allzic Radio Rap 90", "rang": 1032, "ea_fr_25": 1049, "ea_fr_feb": null, "ea_fr_mar": 1551, "ea_mo_25": 1476, "ea_mo_feb": null, "ea_mo_mar": 3345, "dur_fr_25": "32min 36s", "dur_fr_feb": "--", "dur_fr_mar": "1h 19min"}, {"name": "Allzic Radio Top 20", "rang": 1059, "ea_fr_25": 1496, "ea_fr_feb": 899, "ea_fr_mar": 1336, "ea_mo_25": 5939, "ea_mo_feb": 3093, "ea_mo_mar": 4199, "dur_fr_25": "22min 28s", "dur_fr_feb": "54min 16s", "dur_fr_mar": "37min 57s"}, {"name": "Allzic Radio Classic violon", "rang": 1060, "ea_fr_25": 1126, "ea_fr_feb": 1383, "ea_fr_mar": 1335, "ea_mo_25": 12117, "ea_mo_feb": 10026, "ea_mo_mar": 6671, "dur_fr_25": "51min 35s", "dur_fr_feb": "31min 22s", "dur_fr_mar": "40min 40s"}, {"name": "Allzic Radio RnB", "rang": 1069, "ea_fr_25": null, "ea_fr_feb": 1429, "ea_fr_mar": 1265, "ea_mo_25": null, "ea_mo_feb": 4997, "ea_mo_mar": 5862, "dur_fr_25": "--", "dur_fr_feb": "25min 57s", "dur_fr_mar": "28min 45s"}, {"name": "Allzic Radio Rock Ballad", "rang": 1071, "ea_fr_25": 3091, "ea_fr_feb": 1259, "ea_fr_mar": 1250, "ea_mo_25": 3747, "ea_mo_feb": 2632, "ea_mo_mar": 2408, "dur_fr_25": "52min 42s", "dur_fr_feb": "32min 30s", "dur_fr_mar": "42min 06s"}, {"name": "Allzic Radio K_Pop", "rang": 1085, "ea_fr_25": 1457, "ea_fr_feb": 1203, "ea_fr_mar": 1148, "ea_mo_25": 2568, "ea_mo_feb": 8091, "ea_mo_mar": 3238, "dur_fr_25": "24min 10s", "dur_fr_feb": "21min 33s", "dur_fr_mar": "28min 17s"}, {"name": "Allzic Radio Top 10", "rang": 1088, "ea_fr_25": 1209, "ea_fr_feb": 864, "ea_fr_mar": 1111, "ea_mo_25": 9036, "ea_mo_feb": 4756, "ea_mo_mar": 6234, "dur_fr_25": "31min 43s", "dur_fr_feb": "28min 41s", "dur_fr_mar": "49min 41s"}, {"name": "Allzic Radio Gothique", "rang": 1090, "ea_fr_25": 1354, "ea_fr_feb": 936, "ea_fr_mar": 1078, "ea_mo_25": 9058, "ea_mo_feb": 7448, "ea_mo_mar": 7250, "dur_fr_25": "26min 57s", "dur_fr_feb": "26min 05s", "dur_fr_mar": "18min 55s"}, {"name": "Allzic Radio LoFi", "rang": 1132, "ea_fr_25": 2988, "ea_fr_feb": 599, "ea_fr_mar": 624, "ea_mo_25": 4591, "ea_mo_feb": 1596, "ea_mo_mar": 1778, "dur_fr_25": "45min 49s", "dur_fr_feb": "1h 48min", "dur_fr_mar": "1h 49min"}, {"name": "Allzic Radio Taylor Swift", "rang": 1143, "ea_fr_25": 516, "ea_fr_feb": 498, "ea_fr_mar": 587, "ea_mo_25": 2099, "ea_mo_feb": 311, "ea_mo_mar": 4420, "dur_fr_25": "26min 17s", "dur_fr_feb": "20min", "dur_fr_mar": "24min 07s"}, {"name": "Allzic Radio Thema", "rang": 1157, "ea_fr_25": 578, "ea_fr_feb": 406, "ea_fr_mar": 491, "ea_mo_25": 2256, "ea_mo_feb": 1314, "ea_mo_mar": 1765, "dur_fr_25": "38min 06s", "dur_fr_feb": "19min 39s", "dur_fr_mar": "30min 48s"}], "total": {"fr": [605080, 518225, 550223], "mo": [1406237, 1160847, 1196784], "dur": ["36min 59s", "37min 11s", "38min 26s"]}};
+let view = 'fr';
+
+function fmt(n){ return n==null||n===undefined ? '--' : Number(n).toLocaleString('fr-FR'); }
+
+function pill(a, b) {
+  if (a == null || a === undefined) return '<span class="pill new">Nouveau</span>';
+  if (b == null || b === undefined) return '<span class="pill flat">--</span>';
+  var p = ((b - a) / a * 100), s = p >= 0 ? '+' : '';
+  var c = p > 1 ? 'up' : p < -1 ? 'down' : 'flat';
+  var ar = p > 1 ? '↑' : p < -1 ? '↓' : '→';
+  return '<span class="pill ' + c + '">' + ar + ' ' + s + Math.round(p) + '%</span>';
+}
+
+function renderKpis() {
+  var t = DATA.total;
+  var vals = view === 'fr' ? t.fr : view === 'mo' ? t.mo : t.dur;
+  var v0 = vals[0], v1 = vals[1], v2 = vals[2];
+  var label = view === 'fr' ? 'EA France' : view === 'mo' ? 'EA Monde' : 'Durée moy. FR';
+  var isDur = view === 'dur';
+  document.getElementById('kpis').innerHTML =
+    '<div class="kpi"><div class="kpi-label">Mars 2026 — ' + label + '</div><div class="kpi-val">' + (isDur ? v2 : fmt(v2)) + '</div><div class="kpi-evol">' + (isDur ? '' : pill(v1, v2)) + ' vs Fév. 2026</div></div>' +
+    '<div class="kpi"><div class="kpi-label">Évol. 1 an (vs Mars 2025)</div><div class="kpi-val" style="font-size:16px">' + (isDur ? '--' : pill(v0, v2)) + '</div><div class="kpi-evol" style="color:#aaa;font-size:12px">Mars 2025 : ' + (isDur ? v0 : fmt(v0)) + '</div></div>' +
+    '<div class="kpi"><div class="kpi-label">Février 2026</div><div class="kpi-val" style="font-size:16px;color:#888">' + (isDur ? v1 : fmt(v1)) + '</div></div>' +
+    '<div class="kpi"><div class="kpi-label">Web-radios actives</div><div class="kpi-val">70</div><div class="kpi-evol" style="color:#aaa;font-size:12px">+1 vs Mars 2025 (69)</div></div>';
+}
+
+function renderTable() {
+  var q = (document.getElementById('search').value || '').toLowerCase();
+  var radios = DATA.radios.filter(function(r){ return r.name.toLowerCase().indexOf(q) >= 0; });
+  document.getElementById('count').textContent = radios.length + ' web-radio' + (radios.length > 1 ? 's' : '');
+  var isDur = view === 'dur';
+  var rows = '';
+  radios.forEach(function(r) {
+    var v0, v1, v2;
+    if (view === 'fr') { v0 = r.ea_fr_25; v1 = r.ea_fr_feb; v2 = r.ea_fr_mar; }
+    else if (view === 'mo') { v0 = r.ea_mo_25; v1 = r.ea_mo_feb; v2 = r.ea_mo_mar; }
+    else { v0 = r.dur_fr_25; v1 = r.dur_fr_feb; v2 = r.dur_fr_mar; }
+    var f0 = isDur ? '<span class="muted">' + (v0 || '--') + '</span>' : '<span class="muted">' + fmt(v0) + '</span>';
+    var f1 = isDur ? '<span class="muted">' + (v1 || '--') + '</span>' : '<span class="muted">' + fmt(v1) + '</span>';
+    var f2 = isDur ? '<strong>' + v2 + '</strong>' : '<strong>' + fmt(v2) + '</strong>';
+    rows += '<tr>' +
+      '<td class="name left" title="' + r.name + '">' + r.name + '</td>' +
+      '<td class="rang">#' + r.rang + '</td>' +
+      '<td class="muted">' + (isDur ? (v0 || '--') : fmt(v0)) + '</td>' +
+      '<td class="muted">' + (isDur ? (v1 || '--') : fmt(v1)) + '</td>' +
+      '<td class="hi-col"><strong>' + (isDur ? v2 : fmt(v2)) + '</strong></td>' +
+      '<td>' + (isDur ? '' : pill(v1, v2)) + '</td>' +
+      '<td>' + (isDur ? '' : pill(v0, v2)) + '</td>' +
+      '<td class="muted">' + (view !== 'dur' ? r.dur_fr_mar : '') + '</td>' +
+      '</tr>';
+  });
+  var t = DATA.total;
+  var tv = view === 'fr' ? t.fr : view === 'mo' ? t.mo : t.dur;
+  rows += '<tr class="total-row">' +
+    '<td class="left" colspan="2">Total Allzic</td>' +
+    '<td class="muted">' + (isDur ? tv[0] : fmt(tv[0])) + '</td>' +
+    '<td class="muted">' + (isDur ? tv[1] : fmt(tv[1])) + '</td>' +
+    '<td class="hi-bot"><strong>' + (isDur ? tv[2] : fmt(tv[2])) + '</strong></td>' +
+    '<td>' + (isDur ? '' : pill(tv[1], tv[2])) + '</td>' +
+    '<td>' + (isDur ? '' : pill(tv[0], tv[2])) + '</td>' +
+    '<td class="muted">' + (view !== 'dur' ? t.dur[2] : '') + '</td>' +
+    '</tr>';
+  document.getElementById('table-body').innerHTML = rows;
+}
+
+function switchView(v, btn) {
+  view = v;
+  document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+  renderKpis();
+  renderTable();
+}
+
+renderKpis();
+renderTable();
+</script>
+</body>
+</html>
